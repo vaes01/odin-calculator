@@ -44,9 +44,8 @@ function operate(operator, firstNumber, secondNumber) {
 
 // step 4 - Create a basic HTML calculator with buttons for each digit and operator (including "=").
 
-// let mainContainer = document.querySelector(".mainContainer");
-
 let mainContainer = document.createElement("div")
+mainContainer.classList.add("mainContainer");
 document.body.appendChild(mainContainer)
 
 let calcBody = document.createElement("div");
@@ -117,7 +116,7 @@ for (let j = 0; j < 5; j++) {
 
 
 let zeroBtn = document.createElement("button");
-zeroBtn.classList.add("zeroBtn");
+zeroBtn.classList.add("numberBtn");
 zeroKeySection.appendChild(zeroBtn);
 zeroBtn.textContent = 0;
 
@@ -130,4 +129,27 @@ let clearEntryBtn = document.createElement("button");
 clearEntryBtn.classList.add("clearEntryBtn");
 zeroKeySection.appendChild(clearEntryBtn);
 clearEntryBtn.textContent = "CE";
+
+
+// step 5 - Create the functions that populate the display when you click the digit buttons. You should store the content of the display (the number) in a variable for use in the next step.
+
+let digitBtn = document.querySelectorAll(".numberBtn");
+let displayContent = "";
+
+digitBtn.forEach((element) => {
+    element.addEventListener("click", function() {
+        calcDisplay.textContent += element.textContent
+        displayContent = String(calcDisplay.textContent);
+        console.log(displayContent);
+    });
+});
+
+
+
+
+
+
+
+
+
 
