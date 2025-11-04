@@ -138,7 +138,7 @@ let displayContent = "";
 
 const numberFormat = new Intl.NumberFormat("en-US");
 
-//input from mouse
+//input from mouse (digits)
 digitBtn.forEach((element) => {
     element.addEventListener("click", function() {
         if (lastDigitClicked === 0) {
@@ -150,7 +150,7 @@ digitBtn.forEach((element) => {
         } else {
             calcDisplay.textContent = calcDisplay.textContent.replaceAll(",", "") +  element.textContent;
 
-            calcDisplay.textContent = (numberFormat.format(calcDisplay.textContent));
+            calcDisplay.textContent = numberFormat.format(calcDisplay.textContent);
 
             console.log(calcDisplay.textContent);
 
@@ -234,11 +234,8 @@ clearEntryBtn.addEventListener("click", function() {
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "Backspace") {
-        secondNum = 1;
-        lastDigitClicked = 0;
-        result = 0;
-        calcDisplay.textContent = "";
-        displayContent = "";
+        calcDisplay.textContent = calcDisplay.textContent.slice(0, calcDisplay.textContent.length - 1);
+        calcDisplay.textContent = numberFormat.format(calcDisplay.textContent.replaceAll(",", ""));
     };
 });
 
@@ -447,3 +444,26 @@ document.addEventListener("keydown", (event) => {
 
     };
 });
+
+
+let footer = document.createElement("div");
+footer.classList.add("footer");
+mainContainer.appendChild(footer);
+
+let link = document.createElement("a");
+link.classList.add("link");
+link.setAttribute("href", "https://github.com/vaes01");
+link.setAttribute("target", "_blank");
+
+let githubLogo = document.createElement("img");
+githubLogo.src = "github-logo.png";
+githubLogo.height = 28;
+link.appendChild(githubLogo);
+
+let copyright = document.createElement("p");
+copyright.classList.add("copyright");
+footer.appendChild(copyright);
+copyright.textContent = "© " + " " + (new Date().getFullYear()) + " vaes01";
+
+footer.appendChild(link);
+
