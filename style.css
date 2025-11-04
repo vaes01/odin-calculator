@@ -86,7 +86,7 @@
     /* border: 4px solid black; */
 }
 
-.numberBtn, .operatorBtn, .zeroBtn, .pointBtn, .clearEntryBtn {
+.numberBtn, .operatorBtn, .zeroBtn, .clearEntryBtn {
     display: flex;
     height: 65px;
     width: 65px;
@@ -95,8 +95,12 @@
     border-radius: 8px;
 }
 
-.numberBtn:hover {
+.numberBtn:hover, .clearEntryBtn:hover, .clearBtn:hover {
     background-color: rgb(196, 196, 196);
+}
+
+.operatorBtn:hover {
+    background-color: rgb(221, 148, 13);
 }
 
 

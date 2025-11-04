@@ -24,7 +24,7 @@ function divide(a, b) {
 // step 2 - create three variables, one for each part o the operation (number, operator, another number).
 
 let firstNum = 0;
-let secondNum = 0;
+let secondNum = 1; // 1 as default value to handle division by zero ahead
 let operator = "";
 
 
@@ -35,15 +35,16 @@ function operate(operator, firstNumber, secondNumber) {
         return add(firstNumber, secondNumber);
     } else if (operator === "-") {
         return subtrac(firstNumber, secondNumber);
-    } else if (operator === "*") {
+    } else if (operator === "x") {
         return multiply(firstNumber, secondNumber);
-    } else if (operator === "/") {
+    } else if (operator === "÷") {
         return divide(firstNumber, secondNumber);
     }
 };
 
 // step 4 - Create a basic HTML calculator with buttons for each digit and operator (including "=").
 
+// evertyghing is inside the mainContainer
 let mainContainer = document.createElement("div")
 mainContainer.classList.add("mainContainer");
 document.body.appendChild(mainContainer)
@@ -77,10 +78,9 @@ let numberKeySection = document.createElement("div");
 numberKeySection.classList.add("numberKeySection");
 mainKeySection.appendChild(numberKeySection);
 
-let numberKey = {};
-
 let count = 1;
 
+// create rows for numeric keys and then create numberic keys of each row
 for (let i = 1; i <= 3; i++) {
     let numericRow = document.createElement("div");
     numericRow.classList.add("numericRow");
@@ -121,7 +121,7 @@ zeroKeySection.appendChild(zeroBtn);
 zeroBtn.textContent = 0;
 
 let pointBtn = document.createElement("button");
-pointBtn.classList.add("pointBtn");
+pointBtn.classList.add("numberBtn");
 zeroKeySection.appendChild(pointBtn);
 pointBtn.textContent = ".";
 
@@ -136,20 +136,314 @@ clearEntryBtn.textContent = "CE";
 let digitBtn = document.querySelectorAll(".numberBtn");
 let displayContent = "";
 
+const numberFormat = new Intl.NumberFormat("en-US");
+
+//input from mouse
 digitBtn.forEach((element) => {
     element.addEventListener("click", function() {
-        calcDisplay.textContent += element.textContent
-        displayContent = String(calcDisplay.textContent);
-        console.log(displayContent);
+        if (lastDigitClicked === 0) {
+            calcDisplay.textContent = "";
+            displayContent = "";
+        };
+        if (calcDisplay.textContent.includes(".") && element.textContent ===".") {
+            calcDisplay.textContent = calcDisplay.textContent;
+        } else {
+            calcDisplay.textContent = calcDisplay.textContent.replaceAll(",", "") +  element.textContent;
+
+            calcDisplay.textContent = (numberFormat.format(calcDisplay.textContent));
+
+            console.log(calcDisplay.textContent);
+
+            displayContent = calcDisplay.textContent;
+            lastDigitClicked = 1;
+        };
+    });
+});
+
+// input from keyboard (digits)
+document.addEventListener("keydown", (event) => {
+    if ((event.key >= "0" && event.key <= "9") || (event.key === ".")) {
+        if (lastDigitClicked === 0) {
+            calcDisplay.textContent = "";
+            displayContent = "";
+        };
+        if (calcDisplay.textContent.includes(".") && event.key ===".") {
+            calcDisplay.textContent = calcDisplay.textContent;
+        } else {
+            calcDisplay.textContent = calcDisplay.textContent.replaceAll(",", "") +  event.key;
+
+            calcDisplay.textContent = (numberFormat.format(calcDisplay.textContent));
+
+            console.log(calcDisplay.textContent);
+
+            displayContent = calcDisplay.textContent;
+            lastDigitClicked = 1;
+        };
+    };
+});
+
+
+// step 6 - Make the calculator work! You’ll need to store the first and second numbers input by the user and then operate() on them when the user presses the = button, according to the operator that was selected between the numbers.
+
+
+let operatorBtnGroup = document.querySelectorAll(".operatorBtn");
+let operatorOnOff = 0;
+let operatorSign = "";
+let lastDigitClicked = 0;
+let result = 0;
+
+
+clearBtn.addEventListener("click", function() {
+    
+    firstNum = 0;
+    secondNum = 1;
+    operator = "";
+    operatorOnOff = 0;
+    operatorSign = "";
+    lastDigitClicked = 0;
+    result = 0;
+    calcDisplay.textContent = "";
+    displayContent = "";
+});
+
+// input from keyboard
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+
+        firstNum = 0;
+        secondNum = 1;
+        operator = "";
+        operatorOnOff = 0;
+        operatorSign = "";
+        lastDigitClicked = 0;
+        result = 0;
+        calcDisplay.textContent = "";
+        displayContent = "";
+    };
+});
+
+
+clearEntryBtn.addEventListener("click", function() {
+    
+    secondNum = 1;
+    lastDigitClicked = 0;
+    result = 0;
+    calcDisplay.textContent = "";
+    displayContent = "";
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Backspace") {
+        secondNum = 1;
+        lastDigitClicked = 0;
+        result = 0;
+        calcDisplay.textContent = "";
+        displayContent = "";
+    };
+});
+
+
+// input from mouse (operators)
+operatorBtnGroup.forEach((element) => {
+    element.addEventListener("click", function() {       
+        
+        let divideByZero = 0;
+
+        if (calcDisplay.textContent === "0" && operatorSign === "÷") {
+            calcDisplay.textContent = "Never try to divide by zero again!";
+            firstNum = 0;
+            secondNum = 1;
+            operator = "";
+            operatorSign = "";
+            lastDigitClicked = 0;
+            result = 0;
+            operatorOnOff = 0;
+            divideByZero = 1;
+            
+        } else {
+
+            if (displayContent !== "" && operatorOnOff === 0) {
+                
+                if (element.textContent !== "=") {
+                    firstNum = parseFloat(calcDisplay.textContent.replaceAll(",", ""));            
+                    operatorOnOff = 1;
+
+                    console.log(firstNum);
+                };
+
+            } else if (displayContent !== "" && operatorOnOff === 1) {
+                
+                console.log(operatorSign);
+
+                secondNum = parseFloat(calcDisplay.textContent.replaceAll(",", ""));
+
+                let firstNumDecimals = (firstNum - Math.trunc(firstNum)).length - 1;
+                let SecondNumDecimals = (secondNum - Math.trunc(secondNum)).length - 1;
+
+                console.log(secondNum);
+
+                // code to address calculation after the "=" sign
+                if (operatorSign !== "=" && lastDigitClicked === 1) {
+                    firstNum = operate(operatorSign, firstNum, secondNum);
+                };
+
+                // code to limit the number of decimal places
+                let maxDecimals = 0;
+                if (operatorSign !== "÷") {
+                    maxDecimals = firstNumDecimals;
+                    if (firstNumDecimals < SecondNumDecimals) {
+                        maxDecimals = SecondNumDecimals;
+                    };
+                }; 
+
+
+                for (let i = 8; i >= 1; i--) {
+                    if (String(firstNum - Math.trunc(firstNum)).length >= i + 1) {
+                        firstNum = Number(firstNum).toFixed(i - 1);
+                        break;
+                    };
+                };
+
+
+
+                if ((element.textContent !== "=" & operatorSign === "=") || (element.textContent !== "=" & lastDigitClicked === 1)) {
+                    calcDisplay.textContent = numberFormat.format(firstNum);
+
+                    result = calcDisplay.textContent;
+
+                    console.log(result);
+
+                } else if (element.textContent === "=" && operatorSign !== "=") {
+                    calcDisplay.textContent = numberFormat.format(firstNum);
+    
+                    result = calcDisplay.textContent;
+                    secondNum = firstNum;
+
+                    operatorOnOff = 0;
+
+                    console.log(element.textContent);
+                    console.log(result);
+                };
+                
+                
+            };
+        };
+
+        if (divideByZero === 0) {
+            lastDigitClicked = 0;
+            operatorSign = element.textContent;
+        }
     });
 });
 
 
+// input from keyboard (operators)
+document.addEventListener("keydown", (event) => {
+    
+    let currentKey = event.key;
+
+    if (currentKey === "Enter") {
+        currentKey = "=";
+    };
+
+    if (currentKey === "/") {
+        currentKey = "÷";
+    };
+
+    if (currentKey === "*") {
+        currentKey = "x";
+    };
+    
+    let Symbols = operatorSymbols.toString();
+    
+    let divideByZero = 0;
+    
+    if (Symbols.includes(currentKey)) {
+
+        if (calcDisplay.textContent === "0" && operatorSign === "÷") {
+            calcDisplay.textContent = "Never try to divide by zero again!";
+            firstNum = 0;
+            secondNum = 1;
+            operator = "";
+            operatorSign = "";
+            lastDigitClicked = 0;
+            result = 0;
+            operatorOnOff = 0;
+            divideByZero = 1;
+            
+        } else {
+
+            if (displayContent !== "" && operatorOnOff === 0) {
+                
+                if (currentKey !== "=") {
+                    firstNum = parseFloat(calcDisplay.textContent.replaceAll(",", ""));            
+                    operatorOnOff = 1;
+
+                    console.log(firstNum);
+                };
+
+            } else if (displayContent !== "" && operatorOnOff === 1) {
+                
+                console.log(operatorSign);
+
+                secondNum = parseFloat(calcDisplay.textContent.replaceAll(",", ""));
+
+                let firstNumDecimals = (firstNum - Math.trunc(firstNum)).length - 1;
+                let SecondNumDecimals = (secondNum - Math.trunc(secondNum)).length - 1;
+
+                console.log(secondNum);
+
+                // code to address calculation after the "=" sign
+                if (operatorSign !== "=" && lastDigitClicked === 1) {
+                    firstNum = operate(operatorSign, firstNum, secondNum);
+                };
+
+                // code to limit the number of decimal places
+                let maxDecimals = 0;
+                if (operatorSign !== "÷") {
+                    maxDecimals = firstNumDecimals;
+                    if (firstNumDecimals < SecondNumDecimals) {
+                        maxDecimals = SecondNumDecimals;
+                    };
+                }; 
+
+
+                for (let i = 8; i >= 1; i--) {
+                    if (String(firstNum - Math.trunc(firstNum)).length >= i + 1) {
+                        firstNum = Number(firstNum).toFixed(i - 1);
+                        break;
+                    };
+                };
 
 
 
+                if ((currentKey !== "=" & operatorSign === "=") || (currentKey !== "=" & lastDigitClicked === 1)) {
+                    calcDisplay.textContent = numberFormat.format(firstNum);
 
+                    result = calcDisplay.textContent;
 
+                    console.log(result);
 
+                } else if (currentKey === "=" && operatorSign !== "=") {
+                    calcDisplay.textContent = numberFormat.format(firstNum);
+    
+                    result = calcDisplay.textContent;
+                    secondNum = firstNum;
 
+                    operatorOnOff = 0;
 
+                    console.log(currentKey);
+                    console.log(result);
+                };
+                
+                
+            };
+        };
+
+        if (divideByZero === 0) {
+            lastDigitClicked = 0;
+            operatorSign = currentKey;
+        }
+
+    };
+});
