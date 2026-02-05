@@ -150,7 +150,20 @@ digitBtn.forEach((element) => {
         } else {
             calcDisplay.textContent = calcDisplay.textContent.replaceAll(",", "") +  element.textContent;
 
+            // new code start
+
+            if (element.textContent === ".") {
+                xyz = 0;
+            } else {
+
+            // new code end
+            
             calcDisplay.textContent = numberFormat.format(calcDisplay.textContent);
+
+            // new code start
+            }
+
+            // new code end
 
             console.log(calcDisplay.textContent);
 
