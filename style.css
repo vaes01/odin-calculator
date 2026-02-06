@@ -13,12 +13,12 @@ body {
 }
 
 .mainContainer {
-    height: 615px;
+    height: 580px;
     width: 355px;
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 5px;
+    margin-top: 2px;
     /* flex-grow: 1; */
     /* border: 2px solid red; */
 
@@ -27,9 +27,9 @@ body {
 .calcBody {
     display: flex;
     flex-direction: column;
-    height: 550px;
+    height: 450px;
     width: 350px;
-    min-height: 550px;
+    min-height: 520px;
     border: 1px solid gray;
     background-color: rgb(233, 233, 233);
     border-radius: 16px;
@@ -60,7 +60,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     width: 3 / 4;
-    flex-grow: 1;    
+    flex-grow: 1;
 }
 
 .secondaryKeySection {
