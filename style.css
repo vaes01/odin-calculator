@@ -13,13 +13,13 @@ body {
 }
 
 .mainContainer {
-    height: 600px;
+    height: 615px;
     width: 355px;
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 50px;
-    flex-grow: 1;
+    margin-top: 5px;
+    /* flex-grow: 1; */
     /* border: 2px solid red; */
 
 }
@@ -35,7 +35,7 @@ body {
     border-radius: 16px;
     box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.3);
     margin: auto;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .calcDisplay {
@@ -133,10 +133,10 @@ button {
 .footer {
     display: flex;
     align-self: center;
-    align-items: center;
     justify-content: space-between;
     width: 170px ;
     height: 50px;
+    /* border: 2px solid red; */
 }
 
 .copyright {
