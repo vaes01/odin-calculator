@@ -27,8 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 550px;
-    /* width: 400px; */
-    width: 300px;
+    width: 400px;
     min-height: 550px;
     border: 1px solid gray;
     background-color: rgb(233, 233, 233);
@@ -42,8 +41,7 @@ body {
     display: flex;
     margin: 20px auto;
     height: 100px;
-    /* width: 330px; */
-    width: 230px;
+    width: 330px;
     border: 1px solid gray;
     background-color: white;
     border-radius: 8px;
@@ -53,8 +51,7 @@ body {
     display: flex;
     margin: 0px auto;
     height: 360px;
-    /* width: 350px; */
-    width: 250px;
+    width: 350px;
 }
 
 .mainKeySection {
@@ -74,8 +71,7 @@ body {
 .clearBtn {
     display: flex;
     height: 65px;
-    /* width: 240px; */
-    width: 175px;
+    width: 240px;
     margin: auto;
     border: 1px solid gray;
     border-radius: 8px;
@@ -100,8 +96,7 @@ body {
 .numberBtn, .operatorBtn, .zeroBtn, .clearEntryBtn {
     display: flex;
     height: 65px;
-    /* width: 65px; */
-    width: 50px;
+    width: 65px;
     margin: auto;
     border: 1px solid gray;
     border-radius: 8px;
