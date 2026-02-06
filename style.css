@@ -14,12 +14,13 @@ body {
 
 .mainContainer {
     height: 600px;
-    width: 600px;
+    width: 355px;
     display: flex;
     flex-direction: column;
     margin: auto;
     margin-top: 50px;
     flex-grow: 1;
+    /* border: 2px solid red; */
 
 }
 
@@ -27,7 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 550px;
-    width: 400px;
+    width: 350px;
     min-height: 550px;
     border: 1px solid gray;
     background-color: rgb(233, 233, 233);
