@@ -105,7 +105,7 @@ let secondaryKeySection = document.createElement("div");
 secondaryKeySection.classList.add("secondaryKeySection");
 caclKeyBoard.appendChild(secondaryKeySection);
 
-let operatorSymbols = ["+", "-", "x", "÷", "="]
+let operatorSymbols = ["÷", "x", "-", "+", "="]
 
 for (let j = 0; j < 5; j++) {
         let operatorBtn = document.createElement("button");
